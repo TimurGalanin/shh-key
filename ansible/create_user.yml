@@ -15,14 +15,14 @@
   - debug:
       msg: "{{ my_pass }}"
 
-- name: Added a consultant whose account you want to expire
-  user:
-    name: '{{NEW_USER}}'
-    password: '{{my_pass}}'
-    shell: /bin/bash
-    groups: devops
-    generate_ssh_key: yes
-    # expires: 1422403387
+  - name: Added a consultant whose account you want to expire
+    user:
+      name: '{{NEW_USER}}'
+      password: '{{my_pass}}'
+      shell: /bin/bash
+      groups: devops
+      generate_ssh_key: yes
+      # expires: 1422403387
       # - name: Download foo.conf
 
        #   get_url:
