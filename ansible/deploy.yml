@@ -1,0 +1,30 @@
+---
+- name: Test ping host all
+  hosts: main_server
+  #become: yes
+  gather_facts: yes
+  # tasks:
+  # - name: Git checkout
+  #   ping:
+
+  # vars:
+  #   my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+  tasks:
+  - set_fact:
+      my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+  - debug:
+      msg: "{{ my_pass }}"
+
+
+      # - name: Download foo.conf
+
+       #   get_url:
+       # url: "{{ nodejs_url }}"
+  #     dest: /opt/node.tar.xz
+  #     mode: '0440'
+  #
+  # - name: tar.xz
+  #   ansible.builtin.unarchive:
+  #     src: /opt/node.tar.xz
+  #     dest: /opt
+  #     remote_src: yes

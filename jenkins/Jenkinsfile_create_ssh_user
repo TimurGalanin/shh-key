@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+    // environment {
+    //     VDS_TOKEN     = credentials('clo')
+    //
+    // }
+    parameters {
+                string(
+                 name: 'NEW_USER',
+                 defaultValue: '',
+                 description: ''
+                 )
+      string(
+       name: 'BRANCH',
+       defaultValue: 'feature/init',
+       description: 'BRANCH'
+     )
+
+     // booleanParam(
+     //   name: 'DOCKER',
+     //   defaultValue: true,
+     //   description: 'Build image'
+     // )
+
+     }
+
+      stages() {
+
+
+        stage('Build Front' ) {
+        steps {
+          script {
+            // withCredentials([string(credentialsId: 'vault_secret', variable: 'NEXUS_PASSWORD')]) {
+            //     sh "echo \"${NEXUS_PASSWORD}\" > ./.ansible_vault_file"
+            // }
+        //    withCredentials([string(credentialsId: 'git_token', variable: 'token')]) {
+            withCredentials([sshUserPrivateKey(credentialsId: 'ssh_for_server',
+                                              keyFileVariable: 'JENKINS_PRIVATE_KEY', passphraseVariable: 'PASSPHRASE',
+                                               usernameVariable: 'USERNAME')]) {
+
+            playbook_name = "create_user.yml"
+            tags='front'
+            ansiblePlaybook extras:   "  -u root --private-key ${JENKINS_PRIVATE_KEY} -vv --extra-vars  \"NEW_USER=${NEW_USER} step=${tags} workspace=${WORKSPACE}    ssh_key=${JENKINS_PRIVATE_KEY} inventory_dir=\"inventories/dev/\"\" ",
+            installation: 'ansible29',
+            inventory: "${WORKSPACE}/ansible/inventories/dev/inventory",
+            playbook: "${WORKSPACE}/ansible/${playbook_name}"
+
+
+         }
+      // }
+//--vault-password-file ${WORKSPACE}/.ansible_vault_file
+
+      }
+      }
+      }
+
+
+
+
+      // stage('Test1' ) {
+      // }
+
+
+
+
+    }
+
+    post {
+        success {
+
+            archiveArtifacts allowEmptyArchive: true, artifacts: '${WORKSPACE}/simple-back-front/front/*.zip', fingerprint: true
+
+        }
+      }
+}
