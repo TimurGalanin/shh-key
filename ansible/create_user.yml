@@ -21,6 +21,7 @@
     password: '{{my_pass}}'
     shell: /bin/bash
     groups: devops
+    generate_ssh_key: yes
     # expires: 1422403387
       # - name: Download foo.conf
 
