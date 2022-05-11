@@ -15,16 +15,29 @@
   - debug:
       msg: "{{ my_pass }}"
 
-  - name: Added a consultant whose account you want to expire
+  - name: Ensure group "somegroup" exists
+    group:
+      name: devops
+      state: present
+
+  - name: Added user to admins
     user:
       name: '{{NEW_USER}}'
       password: '{{my_pass}}'
       shell: /bin/bash
-      groups: devops
+      groups: sudo
       generate_ssh_key: yes
       # expires: 1422403387
       # - name: Download foo.conf
 
+  # NOTE: Fully quoted because of the ': ' on the line. See the Gotchas in the YAML docs.
+  # - name: Validate the sudoers file before saving
+  #   ansible.builtin.lineinfile:
+  #     path: /etc/sudoers
+  #     state: present
+  #     regexp: '^%ADMIN ALL='
+  #     line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+  #     validate: /usr/sbin/visudo -cf %s
        #   get_url:
        # url: "{{ nodejs_url }}"
   #     dest: /opt/node.tar.xz
