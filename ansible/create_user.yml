@@ -23,7 +23,7 @@
   - name: Added user to admins
     user:
       name: '{{NEW_USER}}'
-      password: '{{my_pass}}'
+      password: '{{my_pass | password_hash('sha512') }}'
       shell: /bin/bash
       groups: sudo
       generate_ssh_key: yes
