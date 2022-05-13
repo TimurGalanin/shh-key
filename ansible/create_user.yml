@@ -1,5 +1,4 @@
 ---
-
 - set_fact:
     my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
 - debug:
