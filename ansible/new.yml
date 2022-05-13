@@ -3,31 +3,12 @@
   hosts: main_server
   #become: yes
   gather_facts: yes
-  # tasks:
-  # - name: Git checkout
-  #   ping:
 
-  # vars:
-  #   my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
   tasks:
-  - block:
-    - set_fact:
-        my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
-    - debug:
-        msg: "{{ item }} {{ my_pass }}"
-
-  #  - name: Ensure group "somegroup" exists
-      # group:
-      #   name: devops
-      #   state: present
-
-    - name: Added user to admins
-      user:
-        name: '{{ item }}'
-        password: "{{my_pass | password_hash('sha512') }}"
-        shell: /bin/bash
-        groups: sudo
-        generate_ssh_key: yes
-      # expires: 1422403387
-      # - name: Download foo.conf
+  - name: COPY SRC to host
+    include_role:
+      name: create_user
+      tasks_from: copy_app
+    vars:
+      NEW_USER: '{{ item }}'
     loop: '{{user_list}}'
