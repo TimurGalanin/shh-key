@@ -38,10 +38,15 @@
     groups: sudo
     generate_ssh_key: yes
 
+- name:  get key
+  shell: 'cat /home/{{user_name}}/.ssh/id_rsa.pub'
+  register: user_ssh_key
+
+
 - name:  Add public key  to users.yml
   lineinfile:
     path: /opt/ansible/users.yml
-    line: "{{ user_name}}_ssh: {{lookup('file', '/home/{{user_name}}/.ssh/id_rsa.pub') }}"
+    line: "{{ user_name}}_ssh: {{ user_ssh_key.stdout }}"
 
 - name: COPY
   fetch:
