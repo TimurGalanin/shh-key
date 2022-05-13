@@ -7,14 +7,16 @@
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
-    password: "{{my_pass }}"
+    password: "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
     shell: /bin/bash
     groups: sudo
     generate_ssh_key: no
 
 
-
-- name:  Add public key  to users.yml
-  lineinfile:
-    path: "/opt/ansible/{{ user_name }}.yml"
-    line: "key: {{ user_ssh_key.stdout }}"
+#authorize
+- name: Set authorized key took from file
+  authorized_key:
+    user: '{{ user_name}}'
+    state: present
+    key: "{{lookup('file', '{{workspace}}/{{user_name}}_key.yml') }}"
+"

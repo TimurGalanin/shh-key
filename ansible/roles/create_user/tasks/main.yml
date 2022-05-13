@@ -20,6 +20,12 @@
     path: /opt/ansible/{{ user_name}}.yml
     state: touch
 
+- name: "create /opt/ansible/{{ user_name}}_key.yml"
+  file:
+    path: /opt/ansible/{{ user_name}}_key.yml
+    state: touch
+
+
 - set_fact:
     my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
 
@@ -31,7 +37,7 @@
 - name: Add user to users.yml
   lineinfile:
     path: '/opt/ansible/{{ user_name }}.yml'
-    line: "password: {{ my_pass}}"
+    line: "{{ my_pass}}"
 
 - name: Ensure group "somegroup" exists
   group:
@@ -53,13 +59,19 @@
 
 - name:  Add public key  to users.yml
   lineinfile:
-    path: "/opt/ansible/{{ user_name }}.yml"
-    line: "key: {{ user_ssh_key.stdout }}"
+    path: "/opt/ansible/{{ user_name }}_key.yml"
+    line: "{{ user_ssh_key.stdout }}"
 
 - name: COPY
   fetch:
     src: /opt/ansible/{{ user_name }}.yml
     dest: '{{ workspace}}/{{ user_name }}.yml'
+    flat: yes
+
+- name: COPY2
+  fetch:
+    src: /opt/ansible/{{ user_name }}_key.yml
+    dest: '{{ workspace}}/{{ user_name }}_key.yml'
     flat: yes
       # expires: 1422403387
       # - name: Download foo.conf
