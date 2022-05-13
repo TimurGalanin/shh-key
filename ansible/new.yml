@@ -1,7 +1,23 @@
 ---
 
-- name: Test ping host all
-  hosts: main_server
+# - name: Test ping host all
+#   hosts: main_server
+#   #become: yes
+#   gather_facts: yes
+#
+#   tasks:
+#
+#   - name: COPY SRC to host
+#     include_role:
+#       name: create_user
+#       tasks_from: main
+#     vars:
+#       user_name: '{{ item }}'
+#     loop: '{{user_list}}'
+
+- name: Test ping host all2
+
+  hosts: corp_servers
   #become: yes
   gather_facts: yes
 
@@ -10,7 +26,7 @@
   - name: COPY SRC to host
     include_role:
       name: create_user
-      tasks_from: main
+      tasks_from: сreate_users_copy_ssh
     vars:
       user_name: '{{ item }}'
     loop: '{{user_list}}'

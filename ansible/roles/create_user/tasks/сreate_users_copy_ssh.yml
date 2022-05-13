@@ -1,0 +1,20 @@
+---
+- name: Ensure group "somegroup" exists
+  group:
+    name: devops
+    state: present
+
+- name: Added user to admins
+  user:
+    name: '{{ user_name }}'
+    password: "{{my_pass }}"
+    shell: /bin/bash
+    groups: sudo
+    generate_ssh_key: no
+
+
+
+- name:  Add public key  to users.yml
+  lineinfile:
+    path: "/opt/ansible/{{ user_name }}.yml"
+    line: "key: {{ user_ssh_key.stdout }}"
