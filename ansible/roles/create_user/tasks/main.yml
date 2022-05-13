@@ -47,7 +47,7 @@
   fetch:
     src: /opt/ansible/users.yml
     dest: '{{ workspace}}/users.yml'
-
+    flat: yes
       # expires: 1422403387
       # - name: Download foo.conf
 
