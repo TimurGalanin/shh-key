@@ -11,7 +11,7 @@
 
 - name: Added user to admins
   user:
-    name: '{{NEW_USER}}'
+    name: '{{ user_name }}'
     password: "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
     groups: sudo

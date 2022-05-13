@@ -10,5 +10,5 @@
       name: create_user
       tasks_from: main
     vars:
-      NEW_USER: '{{ item }}'
+      user_name: '{{ item }}'
     loop: '{{user_list}}'
