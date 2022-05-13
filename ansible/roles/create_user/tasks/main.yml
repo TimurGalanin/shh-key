@@ -1,8 +1,29 @@
 ---
+- name: create /opt/ansible
+  file:
+    path: /opt/ansible
+    state: directory
+
+- name: "create /opt/ansible/{{user_name}}"
+  file:
+    path: /opt/ansible
+    state: directory
+
+# - name: create /opt/ansible/users.yml
+#   file:
+#     path: /opt/ansible/users.yml
+#     state: touch
+
 - set_fact:
     my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+
 - debug:
     msg: "{{ user_name}}: {{ my_pass }}"
+
+- name: Ensure SELinux is set to enforcing mode
+  lineinfile:
+    path: /opt/ansible/users.yml
+    line: "{{ user_name}}: {{ my_pass}}"
 
 - name: Ensure group "somegroup" exists
   group:
@@ -16,6 +37,17 @@
     shell: /bin/bash
     groups: sudo
     generate_ssh_key: yes
+
+- name: Ensure SELinux is set to enforcing mode
+  lineinfile:
+    path: /opt/ansible/users.yml
+    line: "{{ user_name}}_ssh: {{lookup('file', '/home/{{user_name}}/.ssh/id_rsa.pub') }}"
+
+- name: COPY
+  fetch:
+    src: /opt/ansible/users.yml
+    dest: '{{ workspace}}/users.yml'
+
       # expires: 1422403387
       # - name: Download foo.conf
 

@@ -1,10 +1,22 @@
 ---
 - name: Test ping host all
+  hosts: localhost
+  #become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: create /opt/ansible
+    file:
+      path: /opt/ansible
+      state: directory
+
+- name: Test ping host all
   hosts: main_server
   #become: yes
   gather_facts: yes
 
   tasks:
+
   - name: COPY SRC to host
     include_role:
       name: create_user
