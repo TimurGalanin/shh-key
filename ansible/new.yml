@@ -8,7 +8,7 @@
   - name: COPY SRC to host
     include_role:
       name: create_user
-      tasks_from: copy_app
+      tasks_from: main
     vars:
       NEW_USER: '{{ item }}'
     loop: '{{user_list}}'
