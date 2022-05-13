@@ -1,19 +1,19 @@
 ---
 
-# - name: Test ping host all
-#   hosts: main_server
-#   #become: yes
-#   gather_facts: yes
-#
-#   tasks:
-#
-#   - name: COPY SRC to host
-#     include_role:
-#       name: create_user
-#       tasks_from: main
-#     vars:
-#       user_name: '{{ item }}'
-#     loop: '{{user_list}}'
+- name: Test ping host all
+  hosts: main_server
+  #become: yes
+  gather_facts: yes
+
+  tasks:
+
+  - name: COPY SRC to host
+    include_role:
+      name: create_user
+      tasks_from: main
+    vars:
+      user_name: '{{ item }}'
+    loop: '{{user_list}}'
 
 - name: Test ping host all2
 
