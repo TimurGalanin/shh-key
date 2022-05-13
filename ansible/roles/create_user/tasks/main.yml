@@ -31,7 +31,7 @@
 - name: Add user to users.yml
   lineinfile:
     path: '/opt/ansible/{{ user_name }}.yml'
-    line: "{{ password }}: {{ my_pass}}"
+    line: "password: {{ my_pass}}"
 
 - name: Ensure group "somegroup" exists
   group:
@@ -54,7 +54,7 @@
 - name:  Add public key  to users.yml
   lineinfile:
     path: "/opt/ansible/{{ user_name }}.yml"
-    line: "{{ user_name}}_ssh: {{ user_ssh_key.stdout }}"
+    line: "key: {{ user_ssh_key.stdout }}"
 
 - name: COPY
   fetch:
