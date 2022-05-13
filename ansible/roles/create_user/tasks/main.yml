@@ -1,32 +1,21 @@
 ---
-- name: Test ping host all
-  hosts: main_server
-  #become: yes
-  gather_facts: yes
-  # tasks:
-  # - name: Git checkout
-  #   ping:
+- set_fact:
+    my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+- debug:
+    msg: "{{ my_pass }}"
 
-  # vars:
-  #   my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
-  tasks:
-  - set_fact:
-      my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
-  - debug:
-      msg: "{{ my_pass }}"
+- name: Ensure group "somegroup" exists
+  group:
+    name: devops
+    state: present
 
-  - name: Ensure group "somegroup" exists
-    group:
-      name: devops
-      state: present
-
-  - name: Added user to admins
-    user:
-      name: '{{NEW_USER}}'
-      password: "{{my_pass | password_hash('sha512') }}"
-      shell: /bin/bash
-      groups: sudo
-      generate_ssh_key: yes
+- name: Added user to admins
+  user:
+    name: '{{NEW_USER}}'
+    password: "{{my_pass | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: sudo
+    generate_ssh_key: yes
       # expires: 1422403387
       # - name: Download foo.conf
 
