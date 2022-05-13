@@ -2,7 +2,7 @@
 - set_fact:
     my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
 - debug:
-    msg: "{{ my_pass }}"
+    msg: "{{ user_name}}: {{ my_pass }}"
 
 - name: Ensure group "somegroup" exists
   group:
