@@ -4,12 +4,16 @@
     name: devops
     state: present
 
+- debug: generate_ssh_key
+    var: generate_ssh_key
+    
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
     password: "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
     shell: /bin/bash
     groups: sudo
+    update_password: yes
     generate_ssh_key: no
 
 

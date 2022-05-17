@@ -44,12 +44,18 @@
     name: devops
     state: present
 
+- debug: generate_ssh_key
+    var: generate_ssh_key
+
+
+
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
     password: "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
     groups: sudo
+    update_password: yes
     generate_ssh_key: '{{generate_ssh_key }}'
 
 
