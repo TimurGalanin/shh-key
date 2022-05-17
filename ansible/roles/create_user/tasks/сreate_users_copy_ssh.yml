@@ -4,9 +4,10 @@
     name: devops
     state: present
 
-- debug: generate_ssh_key
+- name: generate_ssh_key
+  debug:
     var: generate_ssh_key
-    
+
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
