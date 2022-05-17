@@ -56,7 +56,7 @@
     password: "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
     groups: sudo
-    update_password: yes
+    update_password: always
     generate_ssh_key: '{{generate_ssh_key }}'
 
 

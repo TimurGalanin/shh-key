@@ -14,7 +14,7 @@
     password: "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
     shell: /bin/bash
     groups: sudo
-    update_password: yes
+    update_password: always
     generate_ssh_key: no
 
 
