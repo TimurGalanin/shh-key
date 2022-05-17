@@ -4,12 +4,19 @@
     name: devops
     state: present
 
+- name: generate_ssh_key
+  debug:
+    var: generate_ssh_key
+- set_fact:
+    my_pass:  "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
+
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
-    password: "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
+    password:  "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
     groups: sudo
+    update_password: always
     generate_ssh_key: no
 
 
