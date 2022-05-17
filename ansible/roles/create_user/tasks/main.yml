@@ -44,6 +44,10 @@
     name: devops
     state: present
 
+- name: Ansible date timestamp example
+  debug:
+    var=ansible_date_time.epoch+86400
+
 - name: Added user to admins
   user:
     name: '{{ user_name }}'
@@ -76,6 +80,8 @@
     dest: '{{ workspace}}/{{ user_name }}_key.yml'
     flat: yes
   when: generate_ssh_key
+
+
       # expires: 1422403387
       # - name: Download foo.conf
 
