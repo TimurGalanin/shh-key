@@ -10,8 +10,15 @@
 - set_fact:
     my_pass:  "{{lookup('file', '{{workspace}}/{{user_name}}.yml') }}"
 
+- set_fact:
+    expire_epoch: "{{ ansible_date_time.epoch | int +86400}}"
+- name: Ansible date timestamp example
+  debug:
+    var: expire_epoch
+
 - name: Added user to admins
   user:
+    expires: '{{ expire_epoch }}'
     name: '{{ user_name }}'
     password:  "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
