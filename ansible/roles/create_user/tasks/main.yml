@@ -32,6 +32,8 @@
 - debug:
     msg: "{{ user_name}}: {{ my_pass }}"
 
+- debug:
+    msg: "{{ user_name}}: {{ my_pass }}"
 
 
 - name: Add user to users.yml
