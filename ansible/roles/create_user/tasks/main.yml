@@ -46,7 +46,7 @@
 
 - name: Ansible date timestamp example
   debug:
-    var=ansible_date_time.epoch+86400
+    msg: "{{ '%Y-%m-%d' | strftime( ( ansible_date_time.epoch | int ) + ( 86400 * 3 )  ) }}"
 
 - name: Added user to admins
   user:
