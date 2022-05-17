@@ -13,6 +13,7 @@
       tasks_from: main
     vars:
       user_name: '{{ item }}'
+      generate_ssh_key: no
     loop: '{{user_list}}'
 
 - name: Test ping host all2
@@ -29,4 +30,5 @@
       tasks_from: сreate_users_copy_ssh
     vars:
       user_name: '{{ item }}'
+      generate_ssh_key: no
     loop: '{{user_list}}'

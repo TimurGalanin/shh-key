@@ -19,3 +19,4 @@
     user: '{{ user_name}}'
     state: present
     key: "{{lookup('file', '{{workspace}}/{{user_name}}_key.yml') }}"
+  when: generate_ssh_key
