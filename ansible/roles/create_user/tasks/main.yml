@@ -44,12 +44,18 @@
     name: devops
     state: present
 
+#- name: Ansible date timestamp example
+#  debug:
+    #msg: "{{ '%Y-%m-%d' | strftime( ( ansible_date_time.epoch | int ) + ( 86400 * 3 )  ) }}"
+- set_fact:
+    expire_epoch: "{{ ansible_date_time.epoch | int +86400}}"
 - name: Ansible date timestamp example
   debug:
-    msg: "{{ '%Y-%m-%d' | strftime( ( ansible_date_time.epoch | int ) + ( 86400 * 3 )  ) }}"
+    var: expire_epoch
 
 - name: Added user to admins
   user:
+    expires: '{{ expire_epoch }}'    
     name: '{{ user_name }}'
     password: "{{my_pass | password_hash('sha512') }}"
     shell: /bin/bash
